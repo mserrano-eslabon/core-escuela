@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using CoreEscuela.Entidades;
+using CoreEscuela.Util;
 using static System.Console;
 
 namespace CoreEscuela
@@ -8,66 +10,26 @@ namespace CoreEscuela
     {
         static void Main(string[] args)
         {
-            var miEscuela = new Escuela("Platzi Academy", 2012, TiposEscuela.Primaria,
-              pais: "Mexico", ciudad: "Mexicali");
-
-            miEscuela.Cursos = new Curso[]{
-                            new Curso() { Nombre = "101" },
-                            new Curso() { Nombre = "201" },
-                            new Curso() { Nombre = "301" }
-            };
-
-            ImprimirCursosEscuela(miEscuela);
+            var engine = new EscuelaEngine();
+            engine.Inicializar();
+            Printer.WriteTitle("BIENVENIDOS A LA ESCUELA");
+            //Printer.Beep(10000, cantidad: 10);
+            ImpimirCursosEscuela(engine.Escuela);
+            var listaObjetos = engine.GetObjetosEscuela();
         }
 
-        private static void ImprimirCursosEscuela(Escuela miEscuela)
+        private static void ImpimirCursosEscuela(Escuela escuela)
         {
 
-            WriteLine("========================================================");
-            WriteLine("               Cursos de la escuela ");
-            WriteLine("========================================================");
+            Printer.WriteTitle("Cursos de la Escuela");
 
-            if (miEscuela !=null && miEscuela.Cursos != null)
+
+            if (escuela?.Cursos != null)
             {
-                foreach (var curso in miEscuela.Cursos)
+                foreach (var curso in escuela.Cursos)
                 {
-                    WriteLine($"{curso.Nombre}, {curso.UniqueId}");
+                    WriteLine($"Nombre {curso.Nombre  }, Id  {curso.UniqueId}");
                 }
-            }
-        }
-
-        private static void ImprimirCursosWhile(Curso[] arregloCursos)
-        {
-            int contador = 0;
-            while (contador < arregloCursos.Length)
-            {
-                WriteLine($"{arregloCursos[contador].Nombre}, {arregloCursos[contador].UniqueId}");
-                contador++;
-            }
-        }
-
-        private static void ImprimirCursosDoWhile(Curso[] arregloCursos)
-        {
-            int contador = 0;
-            do
-            {
-                WriteLine($"{arregloCursos[contador].Nombre}, {arregloCursos[contador].UniqueId}");
-                contador++;
-            } while (contador < arregloCursos.Length);
-        }
-        private static void ImprimirCursosFor(Curso[] arregloCursos)
-        {
-            for (int i = 0; i < arregloCursos.Length; i++)
-            {
-                WriteLine($"{arregloCursos[i].Nombre}, {arregloCursos[i].UniqueId}");
-            }
-        }
-
-        private static void ImprimirCursosForEach(Curso[] arregloCursos)
-        {
-            foreach (var curso in arregloCursos)
-            {
-                WriteLine($"{curso.Nombre}, {curso.UniqueId}");
             }
         }
     }
